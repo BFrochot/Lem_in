@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 15:06:38 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/26 11:13:20 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/26 15:53:47 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void				reading(char *line, t_lem *lem);
 void				links(char *line, t_lem *lem, int i);
 void				free_tab(char **t);
 void				rooms(char *line, t_lem *l);
+t_room				*corres(char *str, t_lem *l);
 void				resol(t_room *r, int i, t_lem *l);
 void				sol(t_lem *lem);
 

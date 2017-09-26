@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:26 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/26 11:12:32 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/26 16:08:01 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	init_lem(int ac, char **arg, t_lem *lem)
 	lem->E = 0;
 	lem->G = 0;
 	lem->link = 0;
-	lem->line_nb = 0;
+	lem->line_nb = 1;
 	lem->command = 0;
 	lem->error = 0;
 	options(ac, arg, lem);

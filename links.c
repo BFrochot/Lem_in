@@ -29,29 +29,21 @@ void	create_link(char **t, t_lem *lem)
 {
 	t_room *r;
 
-	r = lem->rooms;
-	while (r && ft_strcmp(t[0], r->name))
-		r = r->next;
+	r = corres(t[0], lem);
+	if (r == NULL)
+		error(7, lem);
+	if (r == NULL)
+		return ;
+	r = corres(t[1], lem);
 	if (r == NULL)
 		error(7, lem);
 	if (r == NULL)
 		return ;
 	if (!lem->error)
-		insert_link(r, t[1]);
-	else
-		free(t[1]);
-	r = lem->rooms;
-	while (r && ft_strcmp(t[1], r->name))
-		r = r->next;
-	if (r == NULL)
-		error(7, lem);
-	if (r == NULL)
-		return ;
+		insert_link(r, ft_strdup(t[0]));
 	if (!lem->error)
-		insert_link(r, t[0]);
-	else
-		free(t[0]);
-	free(t);
+		insert_link(corres(t[0], lem), ft_strdup(t[1]));
+	free_tab(t);
 }
 
 void	links(char *line, t_lem *lem, int i)

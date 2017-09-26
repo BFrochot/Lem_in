@@ -82,5 +82,15 @@ void	error(int i, t_lem *l)
 			ft_putnbr_fd(l->line_nb, 2);
 			ft_putstr_fd(", room missing coordinates.\n", 2);
 		}
+		else if (i == 12)
+		{
+			ft_putstr_fd("Error : can't reach the end.\n", 2);
+			exit(6);
+		}
+	}
+	if (i == 12)
+	{
+		ft_putstr_fd("ERROR\n", 2);
+		exit(6);
 	}
 }

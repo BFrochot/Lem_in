@@ -1,8 +1,9 @@
 #include "lem_in.h"
 
-void	sol(lem)
+void	sol(t_lem *lem)
 {
-
+	if (lem->start->dist == -1)
+		error(12, lem);
 }
 
 t_room *corres(char *str, t_lem *l)
@@ -10,7 +11,7 @@ t_room *corres(char *str, t_lem *l)
 	t_room *r;
 
 	r = l->rooms;
-	while (ft_strcmp(r->name, str))
+	while (r && ft_strcmp(r->name, str))
 		r = r->next;
 	return (r);
 }
@@ -22,6 +23,8 @@ void	resol(t_room *r, int i, t_lem *l)
 	if (r->dist == -1 || r->dist > i)
 		r->dist = i;
 	else
+		return ;
+	if (r == l->start)
 		return ;
 	c = -1;
 	while (r->links[++c])

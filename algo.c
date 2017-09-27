@@ -4,21 +4,21 @@ void	finish(t_lem *l, int sv)
 {
 	char first;
 
-	first = 1;
-	while (l->nb > 0)
+	if (l->start->dist)
 	{
-		--(l->nb);
-		if (!first)
+		first = 1;
+		while (l->nb > 0)
+		{
+			--(l->nb);
+			if (!first)
+				ft_putchar(' ');
+			if (first)
+				first = 0;
+			putmove(sv - l->nb, l->end->name, l->C);
 			ft_putchar(' ');
-		if (first)
-			first = 0;
-		ft_putchar('L');
-		ft_putnbr(sv - l->nb);
-		ft_putchar('-');
-		ft_putstr(l->end->name);
-		ft_putchar(' ');
+		}
+		ft_putchar('\n');
 	}
-	ft_putchar('\n');
 	exit(0);
 }
 
@@ -61,7 +61,7 @@ void	advance(t_room *r, t_lem *l, char *first)
 			if (*first)
 				*first = 0;
 			putmove(r->ant, cor->name, l->C);
-			r->ant = 0;
+			r->ant = r == l->start ? r->ant - 1 : 0;
 		}
 	}
 }
@@ -79,7 +79,7 @@ void	solve(t_lem *l)
 		r = l->rooms;
 		while (r)
 		{
-			if (r != l->start && r->dist == i && r->ant)
+			if (r->dist == i && r->ant)
 				advance(r, l, &first);
 			r = r->next;
 		}
@@ -100,16 +100,15 @@ void	resol(t_lem *l)
 	set_dist(l->end, 0, l);
 	if (l->start->dist == -1)
 		error(12, l);
-	if (l->start->dist == 1)
-		finish(l, l->nb);
-	if (l->start->dist == 0)
-		return ;
-	if (l->error && l->E)
+	if (l->E)
 		ft_putchar('\n');
 	if (l->C)
 		ft_putstr("\033[0m");
 	ft_putstr(l->rendu);
-	ft_putchar('\n');
+	if (l->start->dist == 1 ||l->start->dist == 0) 
+		finish(l, l->nb);
+	short_links(l->rooms, l);
+	sort_by_short_links(l, 1);
 	while (l->end->ant != l->nb)
 	{
 		solve(l);

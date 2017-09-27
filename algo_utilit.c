@@ -52,23 +52,49 @@ void	set_dist(t_room *r, int i, t_lem *l)
 		set_dist(corres(r->links[c], l), i + 1, l);
 }
 
-// void	sort_by_short_links(t_room *r, t_lem *l)
-// {
-// 	(void)r;
-// 	(void)l;
-// }
+void	short_links(t_room *r, t_lem *l)
+{
+	int i;
 
-// void	short_links(t_room *r, t_lem *l)
-// {
-// 	int i;
+	while (r)
+	{
+		i = -1;
+		if (r->dist != -1)
+			while (r->links[++i])
+				if (corres(r->links[i], l)->dist == r->dist + 1)
+					++(r->sl);
+		r = r->next;
+	}
+}
 
-// 	while (r)
-// 	{
-// 		i = -1;
-// 		if (r->dist != -1)
-// 			while (r->links[++i])
-// 				if (corres(r->links[i], l)->dist == r->dist + 1)
-// 					++(r->nb_short_links);
-// 		r = r->next;
-// 	}
-// }
+void	sort_by_short_links(t_lem *l, char done)
+{
+	t_room *r;
+	t_room *prev;
+	t_room *sv;
+
+	while (done)
+	{
+		done = 0;
+		r = l->rooms;
+		prev = NULL;
+		while (r->next)
+		{
+			if (r->next->sl > r->sl)
+			{
+				done = 1;
+				if (prev)
+					prev->next = r->next;
+				else
+					l->rooms = r->next;
+				sv = r->next->next;
+				r->next->next = r;
+				prev = r->next;
+				r->next = sv;
+				r = prev;
+			}
+			prev = r;
+			r = r->next;
+		}
+	}
+}

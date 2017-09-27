@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 15:06:38 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/27 11:34:00 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/27 13:40:50 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct		s_room
 	int				y;
 	int				ant;
 	int				dist;
-	int				nb_short_links;
+	int				sl;
 	int				max;
 	char			**links;
 }					t_room;
@@ -55,6 +55,8 @@ void				rooms(char *line, t_lem *l);
 t_room				*corres(char *str, t_lem *l);
 void				putmove(int i, char *str, char C);
 void				set_dist(t_room *r, int i, t_lem *l);
+void				short_links(t_room *r, t_lem *l);
+void				sort_by_short_links(t_lem *l, char done);
 void				resol(t_lem *l);
 
 #endif

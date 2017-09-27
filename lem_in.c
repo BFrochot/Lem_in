@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:26 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/27 12:22:53 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/27 13:35:51 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int		main(int ac, char **arg)
 	}
 	if (ret == -1)
 		error_p();
+	lem->rendu = ft_strjoinfree(lem->rendu, "\n", 1);
 	resol(lem);
 	return (0);
 }

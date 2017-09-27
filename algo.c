@@ -53,7 +53,7 @@ void	advance(t_room *r, t_lem *l, char *first)
 	while (r->ant && r->links[++i])
 	{
 		cor = corres(r->links[i], l);
-		if (cor->dist == 0 || (cor->dist < r->dist && cor->ant == 0))
+		if (cor->dist == 0 || (cor->dist < r->dist && cor->ant == 0 && r != l->start))
 		{
 			cor->ant = cor->dist ? r->ant : ++(cor->ant);
 			if (!(*first))
@@ -74,7 +74,7 @@ void	solve(t_lem *l)
 
 	i = 0;
 	first = 1;
-	while (++i < l->end->max)
+	while (++i <= l->end->max)
 	{
 		r = l->rooms;
 		while (r)

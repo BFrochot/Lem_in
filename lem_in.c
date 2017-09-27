@@ -6,7 +6,7 @@
 /*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:26 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/27 16:38:57 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/09/27 19:57:20 by bfrochot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int		main(int ac, char **arg)
 
 	lem = palloc(sizeof(t_lem));
 	init_lem(ac, arg, lem);
+	int i;
+	i = 0;
 	while ((ret = get_next_line(0, &line)) != -1 && ret != 0
 			&& ++(lem->line_nb) && (!lem->error || lem->E))
 	{
@@ -97,7 +99,10 @@ int		main(int ac, char **arg)
 			lem->rendu = ft_strjoinfree(lem->rendu, line, 3);
 			lem->rendu = ft_strjoinfree(lem->rendu, "\n", 1);
 		}
+		else
+			free(line);
 	}
+		ft_putstr("La");
 	if (ret == -1)
 		error_p();
 	lem->rendu = ft_strjoinfree(lem->rendu, "\n", 1);

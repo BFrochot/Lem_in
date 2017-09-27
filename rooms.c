@@ -9,7 +9,7 @@ void	first_room(char **t, t_lem *l)
 	l->rooms->y = ft_atoi(t[2]);
 	l->rooms->ant = 0;
 	l->rooms->dist = -1;
-	l->rooms->nb_short_links = 0;
+	l->rooms->sl = 0;
 	l->rooms->links = palloc(sizeof(char *));
 	l->rooms->links[0] = 0;
 	if (l->start_opt)
@@ -32,7 +32,7 @@ void	new_room(char *str, int x, int y, t_lem *l)
 	r->next->y = y;
 	r->next->ant = 0;
 	r->next->dist = -1;
-	r->next->nb_short_links = 0;
+	r->next->sl = 0;
 	r->next->links = palloc(sizeof(char *));
 	r->next->links[0] = 0;
 	if (l->start_opt)

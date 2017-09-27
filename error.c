@@ -99,6 +99,11 @@ void	error(int i, t_lem *l)
 			ft_putstr_fd("Error : end not set.\n", 2);
 			exit(i);
 		}
+		if (i == 21)
+		{
+			ft_putstr_fd("Error : No input.\n", 2);
+			exit(i);
+		}
 	}
 	if (i == 1 || i == 12 || i == 13 || i == 14)
 	{

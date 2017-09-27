@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:26 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/27 13:35:51 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/27 16:38:57 by bfrochot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	nb_ants(t_lem *lem)
 	}
 	if (ret == -1)
 		error_p();
+	if (ret == 0)
+		error(21, lem);
 	lem->nb = ft_atoi(nb);
 	lem->rendu = ft_strjoinfree(lem->rendu, nb, 3);
 	lem->rendu = ft_strjoinfree(lem->rendu, "\n", 1);

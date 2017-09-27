@@ -16,7 +16,7 @@ void	putmove(int i, char *str, char C)
 	char *ito;
 
 	ito = ft_itoa(i);
-	s = malloc(ft_strlen(ito) + ft_strlen(str) + C ? 3 + 18 : 3);
+	s = malloc(ft_strlen(ito) + ft_strlen(str) + C ? 3 + 36 : 3);
 	*s = 0;
 	if (C)
 		ft_strcat(s, "\033[36m");

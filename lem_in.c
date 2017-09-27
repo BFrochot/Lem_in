@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:26 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/26 16:08:01 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/27 12:22:53 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	options(int ac, char **arg, t_lem *lem)
 	while (--ac)
 	{
 		if (arg[ac][0] != '-')
-			error(0, lem);
+			error(20, lem);
 		i = 0;
 		while (arg[ac][++i])
 		{
@@ -27,6 +27,8 @@ void	options(int ac, char **arg, t_lem *lem)
 				lem->E = 1;
 			else if (arg[ac][i] == 'G')
 				lem->G = 1;
+			else if (arg[ac][i] == 'C')
+				lem->C = 1;
 			else
 				error(0, lem);
 		}
@@ -53,7 +55,8 @@ void	nb_ants(t_lem *lem)
 	if (ret == -1)
 		error_p();
 	lem->nb = ft_atoi(nb);
-	free(nb);
+	lem->rendu = ft_strjoinfree(lem->rendu, nb, 3);
+	lem->rendu = ft_strjoinfree(lem->rendu, "\n", 1);
 }
 
 void	init_lem(int ac, char **arg, t_lem *lem)
@@ -63,40 +66,17 @@ void	init_lem(int ac, char **arg, t_lem *lem)
 	lem->rooms = NULL;
 	lem->E = 0;
 	lem->G = 0;
+	lem->C = 0;
 	lem->link = 0;
 	lem->line_nb = 1;
 	lem->command = 0;
 	lem->error = 0;
+	lem->rendu = ft_strdup("");
 	options(ac, arg, lem);
+	if (lem->C)
+		ft_putstr("\033[32m");
 	nb_ants(lem);
 }
-
-void	truc(t_lem *lem)
-{
-	t_room *r;
-	int i;
-
-	r = lem->rooms;
-	while (r)
-	{
-		ft_putstr(r->name);
-		ft_putstr(" ");
-		ft_putnbr(r->x);
-		ft_putstr(" ");
-		ft_putnbr(r->y);
-		ft_putstr(" et dist = ");
-		ft_putnbr(r->dist);
-		ft_putstr("\n");
-		i = -1;
-		while (r->links[++i])
-		{
-			ft_putstr(r->links[i]);
-			ft_putstr("\n");
-		}
-		r = r->next;
-	}
-}
-
 
 int		main(int ac, char **arg)
 {
@@ -106,21 +86,18 @@ int		main(int ac, char **arg)
 
 	lem = palloc(sizeof(t_lem));
 	init_lem(ac, arg, lem);
-	if (lem->error)
-	{
-		ft_putstr_fd("ERROR\n", 2);
-		return (3);
-	}
 	while ((ret = get_next_line(0, &line)) != -1 && ret != 0
 			&& ++(lem->line_nb) && (!lem->error || lem->E))
 	{
 		reading(line, lem);
-		free(line);
+		if (!lem->error)
+		{
+			lem->rendu = ft_strjoinfree(lem->rendu, line, 3);
+			lem->rendu = ft_strjoinfree(lem->rendu, "\n", 1);
+		}
 	}
 	if (ret == -1)
 		error_p();
-	resol(lem->end, 0, lem);
-	sol(lem);
-	truc(lem);
+	resol(lem);
 	return (0);
 }

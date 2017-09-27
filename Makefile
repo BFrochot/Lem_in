@@ -1,17 +1,14 @@
-NAME = FdF
+NAME = lem-in
 
 PATHTOMAKEFILE = ./libft/
 
-FILE =	main \
-		error \
-		get_next_line \
-		keymap \
-		splitquote \
-		fdfinit \
-		init_ev \
-		print_control \
-		drawline \
-		color
+FILE =	error \
+		lem_in \
+		links \
+		read \
+		rooms \
+		algo \
+		algo_utilit
 
 OBJ  := $(addsuffix .o, $(FILE))
 
@@ -21,11 +18,11 @@ $(NAME): $(OBJ)
 	@echo "----------------------------------------"
 	@echo "|       Debut de la compilation        |"
 	@echo "|              Ecole 42                |"
-	@echo "|                FdF                   |"
+	@echo "|               Lem-in                 |"
 	@echo "|           sub compilation :          |"
 	@echo "|               libft                  |"
 	@make -C $(PATHTOMAKEFILE)
-	@gcc -o $(NAME) -Wall -Werror -L ./libft/ minilibx/libmlx.a -lft -Wextra -g $(OBJ) -framework OpenGL -framework AppKit
+	@gcc -o $(NAME) -Wall -Werror -L ./libft/ -lft -Wextra -g $(OBJ)
 	@echo "|                 FIN                  |"
 	@echo "----------------------------------------"
 	@echo "               ________"
@@ -61,6 +58,5 @@ fclean: clean
 	@make -C $(PATHTOMAKEFILE) fclean
 
 re: fclean all
-	@make -C $(PATHTOMAKEFILE) re
 
 .PHONY : all clean fclean re

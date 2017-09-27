@@ -10,9 +10,11 @@ void	error(int i, t_lem *l)
 {
 	if (!l->error && i != 2)
 		l->error = 1;
-	if (i == 0)
+	if (i == 0 || i == 20)
 	{
-		ft_putstr_fd("lem_in: illegal option\nusage: lem_in [-EG]\n", 2);
+		if (!i)
+			ft_putstr_fd("lem_in: illegal option\n", 2);
+		ft_putstr_fd("usage: lem_in [-ECG]\n", 2);
 		exit(2);
 	}
 	if (l->E)
@@ -20,7 +22,7 @@ void	error(int i, t_lem *l)
 		if (i == 1)
 		{
 			ft_putstr_fd("Error : First line must contain only digits.\n", 2);
-			exit(3);
+			exit(i);
 		}
 		else if (i == 2)
 		{
@@ -32,7 +34,7 @@ void	error(int i, t_lem *l)
 		{
 			ft_putstr_fd("Error line ", 2);
 			ft_putnbr_fd(l->line_nb, 2);
-			ft_putstr_fd(", words after link.\n", 2);
+			ft_putstr_fd(", multiple words.\n", 2);
 		}
 		else if (i == 4)
 		{
@@ -56,7 +58,7 @@ void	error(int i, t_lem *l)
 		{
 			ft_putstr_fd("Error line ", 2);
 			ft_putnbr_fd(l->line_nb, 2);
-			ft_putstr_fd(", link with inexistant room.\n", 2);
+			ft_putstr_fd(", link with non existant room.\n", 2);
 		}
 		else if (i == 8)
 		{
@@ -85,12 +87,22 @@ void	error(int i, t_lem *l)
 		else if (i == 12)
 		{
 			ft_putstr_fd("Error : can't reach the end.\n", 2);
-			exit(6);
+			exit(i);
+		}
+		else if (i == 13)
+		{
+			ft_putstr_fd("Error : start not set.\n", 2);
+			exit(i);
+		}
+		else if (i == 14)
+		{
+			ft_putstr_fd("Error : end not set.\n", 2);
+			exit(i);
 		}
 	}
-	if (i == 12)
+	if (i == 1 || i == 12 || i == 13 || i == 14)
 	{
-		ft_putstr_fd("ERROR\n", 2);
-		exit(6);
+		ft_putstr("ERROR\n");
+		exit(i);
 	}
 }

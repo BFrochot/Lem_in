@@ -14,12 +14,18 @@ void	insert_link(t_room *r, char *str)
 {
 	char	**new;
 	int		i;
+	char	d;
 
+	d = 0;
 	new = malloc(sizeof(char *) * (lentab(r->links) + 2));
 	i = -1;
 	while (r->links[++i])
+	{
 		new[i] = r->links[i];
-	new[i] = str;
+		if (!ft_strcmp(new[i], str))
+			d = 1;
+	}
+	new[i] = d ? 0 : str;
 	new[i + 1] = 0;
 	free(r->links);
 	r->links = new;
@@ -39,10 +45,17 @@ void	create_link(char **t, t_lem *lem)
 		error(7, lem);
 	if (r == NULL)
 		return ;
-	if (!lem->error)
+	if (lem->E && !ft_strcmp(t[0], t[1]))
+	{
+		ft_putstr_fd("Care : line ", 2);
+		ft_putnbr_fd(lem->line_nb, 2);
+		ft_putstr_fd(", link to the same room.\n", 2);
+	}
+	else if (!lem->error)
+	{
 		insert_link(r, ft_strdup(t[0]));
-	if (!lem->error)
 		insert_link(corres(t[0], lem), ft_strdup(t[1]));
+	}
 	free_tab(t);
 }
 

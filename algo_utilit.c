@@ -80,35 +80,28 @@ void	affi(t_room *r)
 
 void	set_dist(t_room *r, int i, t_lem *l)
 {
-	int c;
-	char done;
-	t_room *s;
+	int		c;
+	char	done;
+	t_room	*s;
 
 	c = -1;
 	while ((r->links)[++c])
 		corres_links((r->links)[c], l)->dist = 1;
 	done = c == 0 ? 0 : 1;
-	while (done)
+	while (done && ++i)
 	{
-		++i;
+		done = 0;
 		l->max = i;
 		r = l->rooms;
-		done = 0;
 		while (r)
 		{
-			if (r != l->start && r->dist == i)
-			{
-				c = -1;
+			if (r != l->start && r->dist == i && (c = -1))
 				while ((r->links)[++c])
 				{
 					s = corres_links((r->links)[c], l);
-					if (s->dist == -1)
-					{
-						done = 1;
+					if (s->dist == -1 && (done = 1))
 						s->dist = i + 1;
-					}
 				}
-			}
 			r = r->next;
 		}
 	}
@@ -129,22 +122,19 @@ void	short_links(t_room *r, t_lem *l)
 	}
 }
 
-void	sort_by_short_links(t_lem *l, char done)
+void	sort_by_short_links(t_lem *l, char done, t_room *prev)
 {
 	t_room *r;
-	t_room *prev;
 	t_room *sv;
 
-	while (done)
+	while (done && !(done = 0))
 	{
-		done = 0;
 		r = l->rooms;
 		prev = NULL;
 		while (r->next)
 		{
-			if (r->next->sl > r->sl)
+			if (r->next->sl > r->sl && (done = 1))
 			{
-				done = 1;
 				if (prev)
 					prev->next = r->next;
 				else

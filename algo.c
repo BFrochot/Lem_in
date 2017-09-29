@@ -128,7 +128,7 @@ void	resol(t_lem *l)
 	if (l->start->dist == 1 || l->start->dist == 0) 
 		finish(l, l->nb);
 	short_links(l->rooms, l);
-	sort_by_short_links(l, 1);
+	sort_by_short_links(l, 1, NULL);
 	while (l->end->ant != l->nb)
 	{
 		solve(l);

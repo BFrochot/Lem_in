@@ -1,13 +1,11 @@
 #include "lem_in.h"
 
-void	command(char *line, t_lem *lem)
+void	command(t_lem *lem, char **t)
 {
-	char	**t;
 	int		i;
 
-	if (line[1] != '#')
-		return ;
-	t = ft_strsplit(line + 2, ' ');
+	if (lem->link)
+		error(15, lem);
 	i = -1;
 	while (t[++i])
 	{
@@ -15,6 +13,8 @@ void	command(char *line, t_lem *lem)
 			lem->start_opt = 1;
 		else if (!ft_strcmp(t[i], "end"))
 			lem->end_opt = 1;
+		else
+			error(16, lem);
 		free(t[i]);
 	}
 	free(t);
@@ -37,7 +37,8 @@ void	reading(char *line, t_lem *lem)
 		no_command(lem);
 	if (*line == '#')
 	{
-		command(line, lem);
+		if (line[1] == '#')
+			command(lem, ft_strsplit(line + 2, ' '));
 		return ;
 	}
 	else if (lem->link)

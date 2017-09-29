@@ -10,22 +10,32 @@ void	free_tab(char **t)
 	free(t);
 }
 
-void	insert_link(t_room *r, char *str)
+int		ft_intlen(int *k)
 {
-	char	**new;
+	int i;
+
+	i = 0;
+	while (k[i])
+		++i;
+	return (i);
+}
+
+void	insert_link(t_room *r, int s)
+{
+	int		*new;
 	int		i;
 	char	d;
 
 	d = 0;
-	new = malloc(sizeof(char *) * (lentab(r->links) + 2));
+	new = malloc(sizeof(int) * (ft_intlen(r->links) + 2));
 	i = -1;
-	while (r->links[++i])
+	while ((r->links)[++i])
 	{
-		new[i] = r->links[i];
-		if (!ft_strcmp(new[i], str))
+		new[i] = (r->links)[i];
+		if (s == (r->links)[i])
 			d = 1;
 	}
-	new[i] = d ? 0 : str;
+	new[i] = d ? 0 : s;
 	new[i + 1] = 0;
 	free(r->links);
 	r->links = new;
@@ -53,8 +63,8 @@ void	create_link(char **t, t_lem *lem)
 	}
 	else if (!lem->error)
 	{
-		insert_link(r, ft_strdup(t[0]));
-		insert_link(corres(t[0], lem), ft_strdup(t[1]));
+		insert_link(r, corres(t[0], lem)->nam);
+		insert_link(corres(t[0], lem), corres(t[1], lem)->nam);
 	}
 	free_tab(t);
 }

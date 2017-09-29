@@ -28,9 +28,9 @@ void	start_move(t_lem *l, char first)
 	t_room *cor;
 
 	i = -1;
-	while (l->start->links[++i])
+	while ((l->start->links)[++i])
 	{
-		cor = corres(l->start->links[i], l);
+		cor = corres_links((l->start->links)[i], l);
 		if (cor->ant == 0 && cor->dist - l->start->dist - l->start->ant < -1)
 		{
 			--(l->start->ant);
@@ -50,9 +50,9 @@ void	advance(t_room *r, t_lem *l, char *first)
 	t_room *cor;
 
 	i = -1;
-	while (r->ant && r->links[++i])
+	while (r->ant && (r->links)[++i])
 	{
-		cor = corres(r->links[i], l);
+		cor = corres_links((r->links)[i], l);
 		if (cor->dist == 0 || (cor->dist < r->dist && cor->ant == 0 && r != l->start))
 		{
 			cor->ant = cor->dist ? r->ant : ++(cor->ant);
@@ -74,7 +74,7 @@ void	solve(t_lem *l)
 
 	i = 0;
 	first = 1;
-	while (++i <= l->end->max)
+	while (++i <= l->max)
 	{
 		r = l->rooms;
 		while (r)
@@ -88,15 +88,35 @@ void	solve(t_lem *l)
 		start_move(l, first);
 }
 
+void	aff(t_lem *l)
+{
+	t_room *r;
+
+	r = l->rooms;
+	while(r)
+	{
+		ft_putstr("name = ");
+		ft_putstr(r->name);
+		ft_putstr(" dist = ");
+		ft_putnbr(r->dist);
+		ft_putstr("\n");
+		r = r->next;
+	}
+	ft_putstr("max = ");
+	ft_putnbr(l->max);
+	ft_putstr("\n");
+}
+
+
 void	resol(t_lem *l)
 {
 	if (!l->start)
 		error(13, l);
 	if (!l->end)
 		error(14, l);
-	l->end->max = 0;
 	l->start->ant = l->nb;
 	l->end->ant = 0;
+	l->end->dist = 0;
 	set_dist(l->end, 0, l);
 	if (l->start->dist == -1)
 		error(12, l);
@@ -105,7 +125,7 @@ void	resol(t_lem *l)
 	if (l->C)
 		ft_putstr("\033[0m");
 	ft_putstr(l->rendu);
-	if (l->start->dist == 1 ||l->start->dist == 0) 
+	if (l->start->dist == 1 || l->start->dist == 0) 
 		finish(l, l->nb);
 	short_links(l->rooms, l);
 	sort_by_short_links(l, 1);

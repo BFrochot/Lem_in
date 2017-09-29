@@ -22,7 +22,7 @@ $(NAME): $(OBJ)
 	@echo "|           sub compilation :          |"
 	@echo "|               libft                  |"
 	@make -C $(PATHTOMAKEFILE)
-	@gcc -o $(NAME) -Wall -Werror -L ./libft/ -lft -Wextra -g $(OBJ)
+	@gcc -o $(NAME) -Wall -Werror -O3 -L ./libft/ -lft -Wextra -g $(OBJ)
 	@echo "|                 FIN                  |"
 	@echo "----------------------------------------"
 	@echo "               ________"

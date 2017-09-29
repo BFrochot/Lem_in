@@ -10,6 +10,16 @@ t_room *corres(char *str, t_lem *l)
 	return (r);
 }
 
+t_room *corres_links(int i, t_lem *l)
+{
+	t_room *r;
+
+	r = l->rooms;
+	while (r && r->nam != i)
+		r = r->next;
+	return (r);
+}
+
 void	putmove(int i, char *str, char C)
 {
 	char *s;
@@ -35,21 +45,73 @@ void	putmove(int i, char *str, char C)
 	free(s);
 }
 
+void	affi(t_room *r)
+{
+	ft_putstr("name = ");
+	ft_putstr(r->name);
+	ft_putstr(" dist = ");
+	ft_putnbr(r->dist);
+	ft_putstr(" nam = ");
+	ft_putnbr(r->nam);
+	ft_putstr("\n");
+}
+
+// void	set_dist(t_room *r, int i, t_lem *l)
+// {
+// 	int c;
+// 	t_room *s;
+
+// 	// affi(r);
+// 	if (l->max < r->dist)
+// 		l->max = r->dist;
+// 	if (r == l->start)
+// 		return ;
+// 	c = -1;
+// 	while ((r->links)[++c])
+// 	{
+// 		s = corres_links((r->links)[c], l);
+// 		if (s->dist == -1 || s->dist > i + 1)
+// 		{
+// 			s->dist = i + 1;
+// 			set_dist(s, i + 1, l);
+// 		}
+// 	}
+// }
+
 void	set_dist(t_room *r, int i, t_lem *l)
 {
 	int c;
+	char done;
+	t_room *s;
 
-	if (r->dist == -1 || r->dist > i)
-		r->dist = i;
-	else
-		return ;
-	if (l->end->max < r->dist)
-		l->end->max = r->dist;
-	if (r == l->start)
-		return ;
 	c = -1;
-	while (r->links[++c])
-		set_dist(corres(r->links[c], l), i + 1, l);
+	while ((r->links)[++c])
+		corres_links((r->links)[c], l)->dist = 1;
+	done = c == 0 ? 0 : 1;
+	while (done)
+	{
+		++i;
+		l->max = i;
+		r = l->rooms;
+		done = 0;
+		while (r)
+		{
+			if (r != l->start && r->dist == i)
+			{
+				c = -1;
+				while ((r->links)[++c])
+				{
+					s = corres_links((r->links)[c], l);
+					if (s->dist == -1)
+					{
+						done = 1;
+						s->dist = i + 1;
+					}
+				}
+			}
+			r = r->next;
+		}
+	}
 }
 
 void	short_links(t_room *r, t_lem *l)
@@ -60,8 +122,8 @@ void	short_links(t_room *r, t_lem *l)
 	{
 		i = -1;
 		if (r->dist != -1)
-			while (r->links[++i])
-				if (corres(r->links[i], l)->dist == r->dist + 1)
+			while ((r->links)[++i])
+				if (corres_links((r->links)[i], l)->dist == r->dist + 1)
 					++(r->sl);
 		r = r->next;
 	}

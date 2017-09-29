@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 15:57:23 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/27 16:18:56 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/09/28 06:39:56 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
-# define BUFF_SIZE 200
+# define BUFF_SIZE 500
 
 typedef struct	s_struct
 {

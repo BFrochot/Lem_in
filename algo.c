@@ -14,7 +14,7 @@ void	finish(t_lem *l, int sv)
 				ft_putchar(' ');
 			if (first)
 				first = 0;
-			putmove(sv - l->nb, l->end->name, l->C);
+			putmove(ft_itoa(sv - l->nb), l->end->name, l->C);
 			ft_putchar(' ');
 		}
 		ft_putchar('\n');
@@ -33,7 +33,7 @@ void	start_move(t_lem *l, char *first)
 	while ((l->start->links)[++i])
 	{
 		cor = corres_links((l->start->links)[i], l);
-		if (cor->ant == 0 && cor->dist - l->start->dist - l->start->ant < -1)
+		if (cor->ant == 0 && cor->dist != -1 && cor->dist - l->start->dist - l->start->ant < -1)
 		{
 			--(l->start->ant);
 			cor->ant = l->nb - l->start->ant;
@@ -43,7 +43,7 @@ void	start_move(t_lem *l, char *first)
 				ft_putchar(' ');
 			else if (*first)
 				*first = 0;
-			putmove(cor->ant, cor->name, l->C);
+			putmove(ft_itoa(cor->ant), cor->name, l->C);
 		}
 	}
 }
@@ -68,7 +68,7 @@ void	advance(t_room *r, t_lem *l, char *first)
 					ft_putchar(' ');
 				if (*first)
 					*first = 0;
-				putmove(r->ant, cor->name, l->C);
+				putmove(ft_itoa(r->ant), cor->name, l->C);
 				r->ant = r == l->start ? r->ant - 1 : 0;
 			}
 		}
@@ -95,6 +95,7 @@ void	solve(t_lem *l)
 	}
 	if (l->start->ant)
 		start_move(l, &first);
+	ft_putchar('\n');
 }
 
 void	aff(t_lem *l)
@@ -119,8 +120,6 @@ void	aff(t_lem *l)
 
 void	resol(t_lem *l)
 {
-	t_room *r;
-
 	if (!l->start)
 		error(13, l);
 	if (!l->end)
@@ -128,6 +127,8 @@ void	resol(t_lem *l)
 	l->start->ant = l->nb;
 	l->end->ant = 0;
 	l->end->dist = 0;
+	l->start->dist2 = 0;
+	set_dist2(l->start, 0, l);
 	set_dist(l->end, 0, l);
 	if (l->start->dist == -1)
 		error(12, l);
@@ -140,16 +141,23 @@ void	resol(t_lem *l)
 	if (l->start->dist == 1 || l->start->dist == 0) 
 		finish(l, l->nb);
 	short_links(l->rooms, l);
-	// sort_by_short_links(l, 1, NULL);
-	r = l->rooms;
-	while (r->next)
+	sort_by_short_links(l, 1, NULL);
+	t_room *r = l->rooms;
+	while (r)
+	{
+		ft_putstr(r->name);
+		ft_putchar(' ');
+		ft_putnbr(r->dist);
+		ft_putchar(' ');
+		ft_putnbr(r->dist2);
+		ft_putchar(' ');
+		ft_putnbr(r->sl);
+		ft_putchar('\n');
 		r = r->next;
-	quickSort(l->rooms, r, l);
+	}
+	// quickSort(l->rooms, l->time, l);
 	start_move(l, 0);
 	ft_putchar('\n');
 	while (l->end->ant != l->nb)
-	{
 		solve(l);
-		ft_putchar('\n');
-	}
 }

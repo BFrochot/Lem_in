@@ -10,6 +10,7 @@ void	first_room(char *str, t_lem *l, int x, int y)
 	l->rooms->y = y;
 	l->rooms->ant = 0;
 	l->rooms->dist = -1;
+	l->rooms->dist2 = -1;
 	++(l->nam);
 	l->rooms->nam = l->nam;
 	l->rooms->sl = 0;
@@ -33,6 +34,7 @@ void	new_room(char *str, int x, int y, t_lem *l)
 	l->time->next->y = y;
 	l->time->next->ant = 0;
 	l->time->next->dist = -1;
+	l->time->next->dist2 = -1;
 	l->time->next->sl = 0;
 	l->time->next->links = palloc(sizeof(int));
 	(l->time->next->links)[0] = 0;
@@ -40,6 +42,7 @@ void	new_room(char *str, int x, int y, t_lem *l)
 		l->start = l->time->next;
 	if (l->end_opt)
 		l->end = l->time->next;
+	l->time = l->time->next;
 }
 
 void	add_room(char *str, t_lem *l, int x, int y)

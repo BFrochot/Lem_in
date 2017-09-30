@@ -116,10 +116,49 @@ void	short_links(t_room *r, t_lem *l)
 		i = -1;
 		if (r->dist != -1)
 			while ((r->links)[++i])
-				if (corres_links((r->links)[i], l)->dist == r->dist + 1)
+				if (corres_links((r->links)[i], l)->dist == r->dist - 1)
 					++(r->sl);
 		r = r->next;
 	}
+}
+
+void echanger(t_room *ap, t_room *a, t_room *b, t_room *bp, t_lem *l)
+{
+	t_room *sv;
+	t_room *sv_prev;
+
+	if (!(ap))
+		l->rooms = b;
+	else
+		ap->next = b;
+	sv_prev = b->prev;
+	b->prev = ap;
+	sv = b->next;
+	b->next = a->next;
+	bp->next = a;
+	a->next = sv;
+	a->prev = sv_prev;
+}
+
+void quickSort(t_room *debut, t_room *fin, t_lem *l)
+{
+    t_room *save_fin = fin;
+    t_room *pivot = debut;
+
+    if (debut->sl == fin->sl)
+        return;
+	while (1)
+	{
+		while (fin->sl > pivot->sl)
+			fin = fin->prev;
+		while (debut->sl < pivot->sl)
+			debut = debut->next;
+		if (debut->sl < fin->sl)
+			echanger(debut->prev, debut, fin, fin->prev, l);
+		else break;
+	}
+	quickSort(l->rooms, debut, l);
+	quickSort(debut->next, save_fin, l);
 }
 
 void	sort_by_short_links(t_lem *l, char done, t_room *prev)
@@ -127,13 +166,16 @@ void	sort_by_short_links(t_lem *l, char done, t_room *prev)
 	t_room *r;
 	t_room *sv;
 
+	r = l->rooms;
+	while (r)
+		r = r->next;
 	while (done && !(done = 0))
 	{
 		r = l->rooms;
 		prev = NULL;
 		while (r->next)
 		{
-			if (r->next->sl > r->sl && (done = 1))
+			if (r->next->sl < r->sl && (done = 1))
 			{
 				if (prev)
 					prev->next = r->next;

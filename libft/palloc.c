@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   palloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/12 14:46:50 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/08/02 15:37:05 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/09/29 23:47:06 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	*palloc(int i)
 	s = malloc(i);
 	if (!s)
 	{
-		ft_putstr_fd("Malloc error\n", 2);
-		exit(1);
+		perror(NULL);
+		exit(errno);
 	}
 	return (s);
 }

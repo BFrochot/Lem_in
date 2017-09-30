@@ -41,21 +41,22 @@ void	insert_link(t_room *r, int s)
 	r->links = new;
 }
 
-void	create_link(char **t, t_lem *lem)
+void	create_link(char *str1, char *str2, t_lem *lem)
 {
 	t_room *r;
+	t_room *s;
 
-	r = corres(t[0], lem);
+	r = corres(str1, lem);
 	if (r == NULL)
 		error(7, lem);
 	if (r == NULL)
 		return ;
-	r = corres(t[1], lem);
-	if (r == NULL)
+	s = corres(str2, lem);
+	if (s == NULL)
 		error(7, lem);
-	if (r == NULL)
+	if (s == NULL)
 		return ;
-	if (lem->E && !ft_strcmp(t[0], t[1]))
+	if (lem->E && !ft_strcmp(str1, str2))
 	{
 		ft_putstr_fd("Care : line ", 2);
 		ft_putnbr_fd(lem->line_nb, 2);
@@ -63,44 +64,80 @@ void	create_link(char **t, t_lem *lem)
 	}
 	else if (!lem->error)
 	{
-		insert_link(r, corres(t[0], lem)->nam);
-		insert_link(corres(t[0], lem), corres(t[1], lem)->nam);
+		insert_link(s, r->nam);
+		insert_link(r, s->nam);
 	}
-	free_tab(t);
 }
 
 void	links(char *line, t_lem *lem, int i)
 {
-	char	**t;
-	int		lenght;
+	char	*chr;
 
-	lem->link = 1;
-	if (!ft_strchr(line, '-'))
+	chr = ft_strchr(line, '-');
+	if (!chr)
 	{
 		error(6, lem);
 		return ;
 	}
-	t = ft_strsplit(line, '-');
-	lenght = lentab(t);
-	if (lenght == 1)
-	{
-		free_tab(t);
+	while (chr[i + 1] && chr[i + 1] == ' ')
+		++i;
+	if (!chr[i + 1])
 		error(5, lem);
-	}
-	else if (lenght > 2)
-	{
-		free_tab(t);
+	else if (ft_strchr(chr + 1, '-'))
 		error(4, lem);
-	}
 	else
 	{
-		while (t[1][i] && t[1][i] != ' ')
+		while (chr[i + 1] && chr[i + 1] != ' ')
 			++i;
-		while (t[1][i] && t[1][i] == ' ')
+		while (chr[i + 1] && chr[i + 1] == ' ')
 			++i;
-		if (t[1][i])
+		if (chr[i + 1])
 			error(3, lem);
 		else
-			create_link(t, lem);
+		{
+			i = 0;
+			while (chr[i + 1] && chr[i + 1] != ' ')
+				++i;
+			chr[i + 1] = 0;
+			*chr = 0;
+			create_link(line, chr + 1, lem);
+			*chr = '-';
+		}
 	}
 }
+
+// void	links(char *line, t_lem *lem, int i)
+// {
+// 	char	**t;
+// 	int		lenght;
+
+// 	lem->link = 1;
+// 	if (!ft_strchr(line, '-'))
+// 	{
+// 		error(6, lem);
+// 		return ;
+// 	}
+// 	t = ft_strsplit(line, '-');
+// 	lenght = lentab(t);
+// 	if (lenght == 1)
+// 	{
+// 		free_tab(t);
+// 		error(5, lem);
+// 	}
+// 	else if (lenght > 2)
+// 	{
+// 		free_tab(t);
+// 		error(4, lem);
+// 	}
+// 	else
+// 	{
+// 		while (t[1][i] && t[1][i] != ' ')
+// 			++i;
+// 		while (t[1][i] && t[1][i] == ' ')
+// 			++i;
+// 		if (t[1][i])
+// 			error(3, lem);
+// 		else
+// 			create_link(t, lem);
+// 	}
+// }

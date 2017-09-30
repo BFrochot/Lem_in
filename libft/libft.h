@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/03 15:57:23 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/28 06:39:56 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/30 02:56:29 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
-# define BUFF_SIZE 500
+# define BUFF_SIZE 100
 
 typedef struct	s_struct
 {

@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:26 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/28 21:53:27 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/30 02:51:32 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	options(int ac, char **arg, t_lem *lem)
 				lem->G = 1;
 			else if (arg[ac][i] == 'C')
 				lem->C = 1;
+			else if (arg[ac][i] == 'F')
+				lem->fast = 1;
 			else
 				error(0, lem);
 		}
@@ -69,17 +71,42 @@ void	init_lem(int ac, char **arg, t_lem *lem)
 	lem->E = 0;
 	lem->G = 0;
 	lem->C = 0;
+	lem->fast = 0;
 	lem->link = 0;
 	lem->line_nb = 1;
 	lem->command = 0;
 	lem->error = 0;
 	lem->nam = 0;
 	lem->max = 0;
+	lem->len = 0;
 	lem->rendu = ft_strdup("");
 	options(ac, arg, lem);
 	if (lem->C)
 		ft_putstr("\033[32m");
 	nb_ants(lem);
+}
+
+char	*join(char *str, char *s2, t_lem *l)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	if (l->len == 0)
+		l->len = ft_strlen(str);
+	l->len = ft_strlen(s2) + l->len + 1;
+	new = palloc(l->len + 1);
+	i = -1;
+	while (str[++i])
+		new[i] = str[i];
+	j = -1;
+	while (s2[++j])
+		new[i + j] = s2[j];
+	new[i + j] = '\n';
+	new[i + j + 1] = 0;
+	free(str);
+	free(s2);
+	return (new);
 }
 
 int		main(int ac, char **arg)
@@ -94,17 +121,13 @@ int		main(int ac, char **arg)
 			&& ++(lem->line_nb) && (!lem->error || lem->E))
 	{
 		reading(line, lem);
-		if (!lem->error)
-		{
-			lem->rendu = ft_strjoinfree(lem->rendu, line, 3);
-			lem->rendu = ft_strjoinfree(lem->rendu, "\n", 1);
-		}
+		if (!(lem->error) && !(lem->fast))
+			lem->rendu = join(lem->rendu, line, lem);
 		else
 			free(line);
 	}
 	if (ret == -1)
 		error_p();
-	lem->rendu = ft_strjoinfree(lem->rendu, "\n", 1);
 	resol(lem);
 	return (0);
 }

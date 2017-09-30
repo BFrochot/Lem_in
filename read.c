@@ -35,10 +35,12 @@ void	reading(char *line, t_lem *lem)
 
 	if (!lem->command)
 		no_command(lem);
-	if (*line == '#')
+	if (*line == '#' || !(*line))
 	{
 		if (line[1] == '#')
 			command(lem, ft_strsplit(line + 2, ' '));
+		else if (!(*line))
+			error(17, lem);
 		return ;
 	}
 	else if (lem->link)
@@ -48,7 +50,7 @@ void	reading(char *line, t_lem *lem)
 		i = 0;
 		while (line[i] && line[i] != '-')
 			++i;
-		if (line[i])
+		if (line[i] && (lem->link = 1))
 			links(line, lem, 0);
 		else
 			rooms(line, lem);

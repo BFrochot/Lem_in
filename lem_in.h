@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 15:06:38 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/09/29 05:05:30 by cosi             ###   ########.fr       */
+/*   Updated: 2017/09/30 06:44:15 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct		s_room
 {
 	struct s_room	*next;
+	struct s_room	*prev;
 	char			*name;
 	int				nam;
 	int				x;
@@ -38,6 +39,7 @@ typedef struct		s_lem
 	char			E;
 	char			G;
 	char			C;
+	char			fast;
 	char			link;
 	char			start_opt;
 	char			end_opt;
@@ -47,6 +49,7 @@ typedef struct		s_lem
 	char			error;
 	char			*rendu;
 	int				nam;
+	int				len;
 }					t_lem;
 
 void				error_p(void);
@@ -61,6 +64,7 @@ void				putmove(int i, char *str, char C);
 void				set_dist(t_room *r, int i, t_lem *l);
 void				short_links(t_room *r, t_lem *l);
 void				sort_by_short_links(t_lem *l, char done, t_room *prev);
+void				quickSort(t_room *debut, t_room *fin, t_lem *l);
 void				resol(t_lem *l);
 
 #endif

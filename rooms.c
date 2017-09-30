@@ -1,12 +1,13 @@
 #include "lem_in.h"
 
-void	first_room(char **t, t_lem *l)
+void	first_room(char *str, t_lem *l, int x, int y)
 {
 	l->rooms = palloc(sizeof(t_room));
 	l->rooms->next = NULL;
-	l->rooms->name = *t;
-	l->rooms->x = ft_atoi(t[1]);
-	l->rooms->y = ft_atoi(t[2]);
+	l->rooms->prev = NULL;
+	l->rooms->name = str;
+	l->rooms->x = x;
+	l->rooms->y = y;
 	l->rooms->ant = 0;
 	l->rooms->dist = -1;
 	++(l->nam);
@@ -24,6 +25,7 @@ void	new_room(char *str, int x, int y, t_lem *l)
 {
 	l->time->next = palloc(sizeof(t_room));
 	l->time->next->next = NULL;
+	l->time->next->prev = l->time;
 	l->time->next->name = str;
 	++(l->nam);
 	l->time->next->nam = l->nam;
@@ -71,40 +73,90 @@ void	add_room(char *str, t_lem *l, int x, int y)
 		new_room(str, x, y, l);
 }
 
-char	contain_digits(char *str)
-{
-	int i;
+// char	contain_digits(char *str)
+// {
+// 	int i;
 
-	i = -1;
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
-			return (0);
-	return (1);
+// 	i = -1;
+// 	while (str[++i])
+// 		if (!ft_isdigit(str[i]))
+// 			return (0);
+// 	return (1);
+// }
+
+// void	rooms(char *line, t_lem *l)
+// {
+// 	char	**t;
+
+// 	t = ft_strsplit(line, ' ');
+// 	if (lentab(t) > 3)
+// 		error(8, l);
+// 	else if (lentab(t) < 3)
+// 		error(11, l);
+// 	else if (t[0][0] == 'L')
+// 		error(9, l);
+// 	else if (!contain_digits(t[1]) || !contain_digits(t[2]))
+// 		error(10, l);
+// 	if (!l->error)
+// 	{
+// 		if (!l->rooms)
+// 			first_room(*t, l, ft_atoi(t[1]), ft_atoi(t[2]));
+// 		else
+// 			add_room(*t, l, ft_atoi(t[1]), ft_atoi(t[2]));
+// 		free(t[1]);
+// 		free(t[2]);
+// 		free(t);
+// 	}
+// 	else
+// 		free_tab(t);
+// }
+
+void rooms2(char *line, t_lem *l, char *str, int j, int x)
+{
+	int		y;
+
+	y = ft_atoi(line + j);
+	if (!line[j])
+		error(11, l);
+	while (line[j] && line[j] != ' ')
+		++j;
+	while (line[j] && line[j] != ' ')
+		++j;
+	if (line[j])
+		error(8, l);
+	if (!l->error)
+	{
+		if (!l->rooms)
+			first_room(str, l, x, y);
+		else
+			add_room(str, l, x, y);
+	}
+	else
+		free(str);
 }
 
 void	rooms(char *line, t_lem *l)
 {
-	char	**t;
+	int		i;
+	int		j;
+	char	*str;
+	int		x;
 
-	t = ft_strsplit(line, ' ');
-	if (lentab(t) > 3)
-		error(8, l);
-	else if (lentab(t) < 3)
-		error(11, l);
-	else if (t[0][0] == 'L')
+	i = -1;
+	while (line[++i] && line[i] == ' ')
+		;
+	if (line[i] == 'L')
 		error(9, l);
-	else if (!contain_digits(t[1]) || !contain_digits(t[2]))
-		error(10, l);
-	if (!l->error)
-	{
-		if (!l->rooms)
-			first_room(t, l);
-		else
-			add_room(*t, l, ft_atoi(t[1]), ft_atoi(t[2]));
-		free(t[1]);
-		free(t[2]);
-		free(t);
-	}
-	else
-		free_tab(t);
+	j = i;
+	while (line[j] && line[j] != ' ')
+		++j;
+	str = ft_strsub(line, i, j - i);
+	while (line[j] && line[j] == ' ')
+		++j;
+	x = ft_atoi(line + j);
+	while (line[j] && line[j] != ' ')
+		++j;
+	while (line[j] && line[j] == ' ')
+		++j;
+	rooms2(line, l, str, j, x);
 }

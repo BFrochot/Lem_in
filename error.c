@@ -31,6 +31,8 @@ void	errors2(int i)
 		ft_putstr_fd(", command in links.\n", 2);
 	else if (i == 16)
 		ft_putstr_fd(", unknown command.\n", 2);
+	else if (i == 17)
+		ft_putstr_fd(", empty line.\n", 2);
 	else
 		errors_exit(i);
 }
@@ -39,9 +41,9 @@ void	errors(int i, t_lem *l)
 {
 	if (i == 2 || i == 15 || i == 16)
 		ft_putstr_fd("Care : line ", 2);
-	else if (i >= 3 && i <= 11)
+	else if ((i >= 3 && i <= 11) || i == 17)
 		ft_putstr_fd("Error line ", 2);
-	if ((i >= 2 && i <= 11) || i == 15 || i == 16)
+	if ((i >= 2 && i <= 11) || i == 15 || i == 16 || i == 17)
 		ft_putnbr_fd(l->line_nb, 2);
 	if (i == 2)
 		ft_putstr_fd(", no command.\n", 2);
@@ -65,13 +67,13 @@ void	errors(int i, t_lem *l)
 
 void	error(int i, t_lem *l)
 {
-	if (!l->error && i != 2)
+	if (!l->error && i != 2 && i != 15 && i != 16)
 		l->error = 1;
 	if (i == 0 || i == 20)
 	{
 		if (!i)
 			ft_putstr_fd("lem_in: illegal option\n", 2);
-		ft_putstr_fd("usage: lem_in [-ECG]\n", 2);
+		ft_putstr_fd("usage: lem_in [-ECGF]\n", 2);
 		exit(2);
 	}
 	if (l->E)

@@ -27,7 +27,7 @@ void	insert_link(t_room *r, int s)
 	char	d;
 
 	d = 0;
-	new = malloc(sizeof(int) * (ft_intlen(r->links) + 2));
+	new = palloc(sizeof(int) * (ft_intlen(r->links) + 2));
 	i = -1;
 	while ((r->links)[++i])
 	{

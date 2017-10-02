@@ -61,7 +61,7 @@ void	advance(t_room *r, t_lem *l, char *first)
 		while (r->ant && (r->links)[++i])
 		{
 			cor = corres_links((r->links)[i], l);
-			if (cor != l->start && (cor->dist == 0 || (cor->dist < r->dist && cor->ant == 0)))
+			if (cor->dist != -1 && cor != l->start && (cor->dist == 0 || (cor->dist < r->dist && cor->ant == 0)))
 			{
 				cor->ant = cor->dist ? r->ant : ++(cor->ant);
 				if (!(*first))
@@ -120,6 +120,7 @@ void	aff(t_lem *l)
 
 void	resol(t_lem *l)
 {
+
 	if (!l->start)
 		error(13, l);
 	if (!l->end)
@@ -142,19 +143,6 @@ void	resol(t_lem *l)
 		finish(l, l->nb);
 	short_links(l->rooms, l);
 	sort_by_short_links(l, 1, NULL);
-	t_room *r = l->rooms;
-	while (r)
-	{
-		ft_putstr(r->name);
-		ft_putchar(' ');
-		ft_putnbr(r->dist);
-		ft_putchar(' ');
-		ft_putnbr(r->dist2);
-		ft_putchar(' ');
-		ft_putnbr(r->sl);
-		ft_putchar('\n');
-		r = r->next;
-	}
 	// quickSort(l->rooms, l->time, l);
 	start_move(l, 0);
 	ft_putchar('\n');

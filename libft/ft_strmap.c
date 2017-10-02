@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 14:15:29 by bfrochot          #+#    #+#             */
-/*   Updated: 2016/11/05 21:01:49 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/01 16:27:50 by bfrochot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strmap(char const *s, char (*f)(char))
 
 	if (s == NULL)
 		return (NULL);
-	new = (char *)malloc(ft_strlen(s) + 1);
+	new = (char *)palloc(ft_strlen(s) + 1);
 	if (new == NULL)
 		return (NULL);
 	i = 0;

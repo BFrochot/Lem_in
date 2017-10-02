@@ -129,15 +129,19 @@ void	set_dist(t_room *r, int i, t_lem *l)
 
 void	short_links(t_room *r, t_lem *l)
 {
-	int i;
+	int		i;
+	t_room	*s;
 
 	while (r)
 	{
 		i = -1;
 		if (r->dist != -1)
 			while ((r->links)[++i])
-				if (corres_links((r->links)[i], l)->dist < r->dist)
+			{
+				s = corres_links((r->links)[i], l);
+				if (s->dist != -1 && s->dist < r->dist)
 					++(r->sl);
+			}
 		r = r->next;
 	}
 }

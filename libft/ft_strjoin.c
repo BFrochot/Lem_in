@@ -6,7 +6,7 @@
 /*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 15:17:18 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/07/12 14:53:31 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/01 16:27:32 by bfrochot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	new = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	new = (char *)palloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (new == NULL)
 		return (NULL);
 	i = 0;

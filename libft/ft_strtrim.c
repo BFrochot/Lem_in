@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 15:22:21 by bfrochot          #+#    #+#             */
-/*   Updated: 2016/11/05 20:51:11 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/01 16:28:18 by bfrochot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ char	*ft_strtrim(char const *s)
 	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
 		i++;
 	if (len != 0)
-		new = (char *)malloc(len - i + 1);
+		new = (char *)palloc(len - i + 1);
 	else
-		new = (char *)malloc(1);
+		new = (char *)palloc(1);
 	if (new == NULL)
 		return (NULL);
 	j = 0;

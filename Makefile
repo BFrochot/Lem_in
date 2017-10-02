@@ -8,7 +8,8 @@ FILE =	error \
 		read \
 		rooms \
 		algo \
-		algo_utilit
+		algo_utilit \
+		utilities
 
 OBJ  := $(addsuffix .o, $(FILE))
 

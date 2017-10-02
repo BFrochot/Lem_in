@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rooms.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/02 18:17:12 by bfrochot          #+#    #+#             */
+/*   Updated: 2017/10/02 19:15:18 by bfrochot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 void	first_room(char *str, t_lem *l, int x, int y)
@@ -50,7 +62,7 @@ void	add_room(char *str, t_lem *l, int x, int y)
 	t_room *r;
 
 	r = l->rooms;
-	while (r)
+	while (r && (l->time = r))
 	{
 		if (!ft_strcmp(r->name, str))
 		{
@@ -61,7 +73,7 @@ void	add_room(char *str, t_lem *l, int x, int y)
 			free(str);
 			break ;
 		}
-		if (r->x == x && r->y == y)
+		else if (r->x == x && r->y == y)
 		{
 			free(r->name);
 			r->name = str;
@@ -69,52 +81,13 @@ void	add_room(char *str, t_lem *l, int x, int y)
 			l->end = l->end_opt ? r : l->end;
 			break ;
 		}
-		l->time = r;
 		r = r->next;
 	}
 	if (!r)
 		new_room(str, x, y, l);
 }
 
-// char	contain_digits(char *str)
-// {
-// 	int i;
-
-// 	i = -1;
-// 	while (str[++i])
-// 		if (!ft_isdigit(str[i]))
-// 			return (0);
-// 	return (1);
-// }
-
-// void	rooms(char *line, t_lem *l)
-// {
-// 	char	**t;
-
-// 	t = ft_strsplit(line, ' ');
-// 	if (lentab(t) > 3)
-// 		error(8, l);
-// 	else if (lentab(t) < 3)
-// 		error(11, l);
-// 	else if (t[0][0] == 'L')
-// 		error(9, l);
-// 	else if (!contain_digits(t[1]) || !contain_digits(t[2]))
-// 		error(10, l);
-// 	if (!l->error)
-// 	{
-// 		if (!l->rooms)
-// 			first_room(*t, l, ft_atoi(t[1]), ft_atoi(t[2]));
-// 		else
-// 			add_room(*t, l, ft_atoi(t[1]), ft_atoi(t[2]));
-// 		free(t[1]);
-// 		free(t[2]);
-// 		free(t);
-// 	}
-// 	else
-// 		free_tab(t);
-// }
-
-void rooms2(char *line, t_lem *l, char *str, int j, int x)
+void	rooms2(char *line, t_lem *l, char *str, int j, int x)
 {
 	int		y;
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/02 18:24:05 by bfrochot          #+#    #+#             */
+/*   Updated: 2017/10/02 18:35:53 by bfrochot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 void	error_p(void)
@@ -33,17 +45,19 @@ void	errors2(int i)
 		ft_putstr_fd(", unknown command.\n", 2);
 	else if (i == 17)
 		ft_putstr_fd(", empty line.\n", 2);
+	else if (i == 18)
+		ft_putstr_fd(", link to the same room.\n", 2);
 	else
 		errors_exit(i);
 }
 
 void	errors(int i, t_lem *l)
 {
-	if (i == 2 || i == 15 || i == 16)
+	if (i == 2 || i == 15 || i == 16 || i == 18)
 		ft_putstr_fd("Care : line ", 2);
 	else if ((i >= 3 && i <= 11) || i == 17)
 		ft_putstr_fd("Error line ", 2);
-	if ((i >= 2 && i <= 11) || i == 15 || i == 16 || i == 17)
+	if ((i >= 2 && i <= 11) || i == 15 || i == 16 || i == 17 || i == 18)
 		ft_putnbr_fd(l->line_nb, 2);
 	if (i == 2)
 		ft_putstr_fd(", no command.\n", 2);
@@ -67,7 +81,7 @@ void	errors(int i, t_lem *l)
 
 void	error(int i, t_lem *l)
 {
-	if (!l->error && i != 2 && i != 15 && i != 16)
+	if (!l->error && i != 2 && i != 15 && i != 16 && i != 18)
 		l->error = 1;
 	if (i == 0 || i == 20)
 	{

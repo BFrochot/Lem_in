@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   algo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/02 18:21:42 by bfrochot          #+#    #+#             */
+/*   Updated: 2017/10/02 18:27:27 by bfrochot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
 
 void	finish(t_lem *l, int sv)
@@ -24,20 +36,21 @@ void	finish(t_lem *l, int sv)
 
 void	start_move(t_lem *l, char *first)
 {
-	int i;
-	int j;
-	t_room *cor;
+	int		i;
+	int		j;
+	t_room	*cor;
 
 	j = 0;
 	i = -1;
 	while ((l->start->links)[++i])
 	{
 		cor = corres_links((l->start->links)[i], l);
-		if (cor->ant == 0 && cor->dist != -1 && cor->dist - l->start->dist - l->start->ant < -1)
+		if (cor->ant == 0 && cor->dist != -1
+			&& cor->dist - l->start->dist - l->start->ant < -1)
 		{
 			--(l->start->ant);
 			cor->ant = l->nb - l->start->ant;
-			if (!first&& !j)
+			if (!first && !j)
 				j = 1;
 			else if ((!first && j) || !(*first))
 				ft_putchar(' ');
@@ -50,8 +63,8 @@ void	start_move(t_lem *l, char *first)
 
 void	advance(t_room *r, t_lem *l, char *first)
 {
-	int i;
-	t_room *cor;
+	int		i;
+	t_room	*cor;
 
 	i = -1;
 	if (r == l->start)
@@ -61,7 +74,8 @@ void	advance(t_room *r, t_lem *l, char *first)
 		while (r->ant && (r->links)[++i])
 		{
 			cor = corres_links((r->links)[i], l);
-			if (cor->dist != -1 && cor != l->start && (cor->dist == 0 || (cor->dist < r->dist && cor->ant == 0)))
+			if (cor->dist != -1 && cor != l->start
+				&& (cor->dist == 0 || (cor->dist < r->dist && cor->ant == 0)))
 			{
 				cor->ant = cor->dist ? r->ant : ++(cor->ant);
 				if (!(*first))
@@ -103,7 +117,7 @@ void	aff(t_lem *l)
 	t_room *r;
 
 	r = l->rooms;
-	while(r)
+	while (r)
 	{
 		ft_putstr("name = ");
 		ft_putstr(r->name);
@@ -117,10 +131,8 @@ void	aff(t_lem *l)
 	ft_putstr("\n");
 }
 
-
 void	resol(t_lem *l)
 {
-
 	if (!l->start)
 		error(13, l);
 	if (!l->end)
@@ -137,13 +149,13 @@ void	resol(t_lem *l)
 		ft_putchar('\n');
 	if (l->C)
 		ft_putstr("\033[0m");
-	ft_putstr(l->rendu);
+	write(1, l->rendu, l->len);
 	ft_putchar('\n');
-	if (l->start->dist == 1 || l->start->dist == 0) 
+	if (l->start->dist == 1 || l->start->dist == 0)
 		finish(l, l->nb);
 	short_links(l->rooms, l);
 	sort_by_short_links(l, 1, NULL);
-	// quickSort(l->rooms, l->time, l);
+	// quicksort(l->rooms, l->time, l);
 	start_move(l, 0);
 	ft_putchar('\n');
 	while (l->end->ant != l->nb)

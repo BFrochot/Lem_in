@@ -1,14 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   links.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/10/02 18:48:14 by bfrochot          #+#    #+#             */
+/*   Updated: 2017/10/02 19:00:40 by bfrochot         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lem_in.h"
-
-void	free_tab(char **t)
-{
-	int i;
-
-	i = -1;
-	while (t[++i])
-		free(t[i]);
-	free(t);
-}
 
 int		ft_intlen(int *k)
 {
@@ -51,21 +53,43 @@ void	create_link(char *str1, char *str2, t_lem *lem)
 		error(7, lem);
 	if (r == NULL)
 		return ;
+	if (!ft_strcmp(str1, str2))
+	{
+		error(18, lem);
+		return ;
+	}
 	s = corres(str2, lem);
 	if (s == NULL)
 		error(7, lem);
 	if (s == NULL)
 		return ;
-	if (lem->E && !ft_strcmp(str1, str2))
-	{
-		ft_putstr_fd("Care : line ", 2);
-		ft_putnbr_fd(lem->line_nb, 2);
-		ft_putstr_fd(", link to the same room.\n", 2);
-	}
-	else if (!lem->error)
+	if (!lem->error)
 	{
 		insert_link(s, r->nam);
 		insert_link(r, s->nam);
+	}
+}
+
+void	links2(char *line, t_lem *lem, int i, char *chr)
+{
+	int j;
+
+	while (chr[i + 1] && chr[i + 1] != ' ')
+		++i;
+	j = i;
+	while (chr[i + 1] && chr[i + 1] == ' ')
+		++i;
+	if (chr[i + 1])
+		error(3, lem);
+	else
+	{
+		i = 0;
+		while (chr[i + 1] && chr[i + 1] == ' ')
+			++i;
+		chr[j + 1] = 0;
+		*chr = 0;
+		create_link(line, chr + i + 1, lem);
+		*chr = '-';
 	}
 }
 
@@ -86,58 +110,5 @@ void	links(char *line, t_lem *lem, int i)
 	else if (ft_strchr(chr + 1, '-'))
 		error(4, lem);
 	else
-	{
-		while (chr[i + 1] && chr[i + 1] != ' ')
-			++i;
-		while (chr[i + 1] && chr[i + 1] == ' ')
-			++i;
-		if (chr[i + 1])
-			error(3, lem);
-		else
-		{
-			i = 0;
-			while (chr[i + 1] && chr[i + 1] != ' ')
-				++i;
-			chr[i + 1] = 0;
-			*chr = 0;
-			create_link(line, chr + 1, lem);
-			*chr = '-';
-		}
-	}
+		links2(line, lem, i, chr);
 }
-
-// void	links(char *line, t_lem *lem, int i)
-// {
-// 	char	**t;
-// 	int		lenght;
-
-// 	lem->link = 1;
-// 	if (!ft_strchr(line, '-'))
-// 	{
-// 		error(6, lem);
-// 		return ;
-// 	}
-// 	t = ft_strsplit(line, '-');
-// 	lenght = lentab(t);
-// 	if (lenght == 1)
-// 	{
-// 		free_tab(t);
-// 		error(5, lem);
-// 	}
-// 	else if (lenght > 2)
-// 	{
-// 		free_tab(t);
-// 		error(4, lem);
-// 	}
-// 	else
-// 	{
-// 		while (t[1][i] && t[1][i] != ' ')
-// 			++i;
-// 		while (t[1][i] && t[1][i] == ' ')
-// 			++i;
-// 		if (t[1][i])
-// 			error(3, lem);
-// 		else
-// 			create_link(t, lem);
-// 	}
-// }

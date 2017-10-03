@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:21:42 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/03 04:14:46 by cosi             ###   ########.fr       */
+/*   Updated: 2017/10/03 19:36:24 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,28 @@ void	aff(t_lem *l)
 	ft_putstr("\n");
 }
 
+void	sort_start(t_lem *l)
+{
+	int		i;
+	char	done;
+	t_room	*sv;
+
+	done = 1;
+	while (done && !(done = 0))
+	{
+		i = -1;
+		while ((l->start->links)[++i] && (l->start->links)[i + 1])
+		{
+			if ((l->start->links)[i + 1] > (l->start->links)[i] && (done = 1))
+			{
+				sv = (l->start->links)[i];
+				(l->start->links)[i] = (l->start->links)[i + 1];
+				(l->start->links)[i + 1] = sv;
+			}
+		}
+	}
+}
+
 void	resol(t_lem *l)
 {
 	if (!l->start)
@@ -155,6 +177,7 @@ void	resol(t_lem *l)
 		finish(l, l->nb);
 	short_links(l->rooms);
 	sort_by_short_links(l, 1, NULL);
+	sort_start(l);
 	// quicksort(l->rooms, l->time, l);
 	start_move(l, 0);
 	ft_putchar('\n');

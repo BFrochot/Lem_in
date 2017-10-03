@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:51:56 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/03 02:04:18 by cosi             ###   ########.fr       */
+/*   Updated: 2017/10/03 19:26:09 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,6 @@ void	sort_by_short_links(t_lem *l, char done, t_room *prev)
 	t_room *r;
 	t_room *sv;
 
-	r = l->rooms;
-	while (r)
-		r = r->next;
 	while (done && !(done = 0))
 	{
 		r = l->rooms;

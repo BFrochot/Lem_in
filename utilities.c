@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:51:56 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/02 19:01:10 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/03 02:04:18 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ void	init_lem(t_lem *lem)
 	lem->line_nb = 1;
 	lem->command = 0;
 	lem->error = 0;
-	lem->nam = 0;
 	lem->max = 0;
 	lem->len = 0;
 	lem->rendu = NULL;
 }
 
-void	short_links(t_room *r, t_lem *l)
+void	short_links(t_room *r)
 {
 	int		i;
 	t_room	*s;
@@ -43,7 +42,7 @@ void	short_links(t_room *r, t_lem *l)
 		if (r->dist != -1)
 			while ((r->links)[++i])
 			{
-				s = corres_links((r->links)[i], l);
+				s = (r->links)[i];
 				if (s->dist != -1 && s->dist < r->dist)
 					++(r->sl);
 			}

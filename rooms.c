@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rooms.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:17:12 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/02 19:15:18 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/03 02:03:59 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,8 @@ void	first_room(char *str, t_lem *l, int x, int y)
 	l->rooms->ant = 0;
 	l->rooms->dist = -1;
 	l->rooms->dist2 = -1;
-	++(l->nam);
-	l->rooms->nam = l->nam;
 	l->rooms->sl = 0;
-	l->rooms->links = palloc(sizeof(int));
-	(l->rooms->links)[0] = 0;
+	l->rooms->links = 0;
 	if (l->start_opt)
 		l->start = l->rooms;
 	if (l->end_opt)
@@ -40,16 +37,13 @@ void	new_room(char *str, int x, int y, t_lem *l)
 	l->time->next->next = NULL;
 	l->time->next->prev = l->time;
 	l->time->next->name = str;
-	++(l->nam);
-	l->time->next->nam = l->nam;
 	l->time->next->x = x;
 	l->time->next->y = y;
 	l->time->next->ant = 0;
 	l->time->next->dist = -1;
 	l->time->next->dist2 = -1;
 	l->time->next->sl = 0;
-	l->time->next->links = palloc(sizeof(int));
-	(l->time->next->links)[0] = 0;
+	l->time->next->links = 0;
 	if (l->start_opt)
 		l->start = l->time->next;
 	if (l->end_opt)

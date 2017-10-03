@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:21:42 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/02 18:27:27 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/03 04:14:46 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	start_move(t_lem *l, char *first)
 	i = -1;
 	while ((l->start->links)[++i])
 	{
-		cor = corres_links((l->start->links)[i], l);
+		cor = (l->start->links)[i];
 		if (cor->ant == 0 && cor->dist != -1
 			&& cor->dist - l->start->dist - l->start->ant < -1)
 		{
@@ -73,7 +73,7 @@ void	advance(t_room *r, t_lem *l, char *first)
 	{
 		while (r->ant && (r->links)[++i])
 		{
-			cor = corres_links((r->links)[i], l);
+			cor = (r->links)[i];
 			if (cor->dist != -1 && cor != l->start
 				&& (cor->dist == 0 || (cor->dist < r->dist && cor->ant == 0)))
 			{
@@ -153,7 +153,7 @@ void	resol(t_lem *l)
 	ft_putchar('\n');
 	if (l->start->dist == 1 || l->start->dist == 0)
 		finish(l, l->nb);
-	short_links(l->rooms, l);
+	short_links(l->rooms);
 	sort_by_short_links(l, 1, NULL);
 	// quicksort(l->rooms, l->time, l);
 	start_move(l, 0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algo_utilit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:16:10 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/02 19:09:54 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/03 01:47:17 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,6 @@ t_room	*corres(char *str, t_lem *l)
 		s = s->prev;
 	}
 	return (r);
-}
-
-t_room	*corres_links(int i, t_lem *l)
-{
-	t_room *r;
-	t_room *s;
-
-	r = l->rooms;
-	s = l->time;
-	while (r->nam != i && s->nam != i)
-	{
-		r = r->next;
-		s = s->prev;
-	}
-	return (r->nam == i ? r : s);
 }
 
 void	putmove(char *ito, char *str, char c)
@@ -73,7 +58,7 @@ void	set_dist2(t_room *r, int i, t_lem *l)
 
 	c = -1;
 	while ((r->links)[++c])
-		corres_links((r->links)[c], l)->dist2 = 1;
+		((r->links)[c])->dist2 = 1;
 	done = c == 0 ? 0 : 1;
 	while (done && ++i)
 	{
@@ -84,7 +69,7 @@ void	set_dist2(t_room *r, int i, t_lem *l)
 			if (r != l->end && r->dist2 == i && (c = -1))
 				while ((r->links)[++c])
 				{
-					s = corres_links((r->links)[c], l);
+					s = (r->links)[c];
 					if (s->dist2 == -1 && (done = 1))
 						s->dist2 = i + 1;
 				}
@@ -101,7 +86,7 @@ void	set_dist(t_room *r, int i, t_lem *l)
 
 	c = -1;
 	while ((r->links)[++c])
-		corres_links((r->links)[c], l)->dist = 1;
+		((r->links)[c])->dist = 1;
 	done = c == 0 ? 0 : 1;
 	while (done && ++i && (l->max = i))
 	{
@@ -113,7 +98,7 @@ void	set_dist(t_room *r, int i, t_lem *l)
 			if (r != l->start && r->dist == i && (c = -1))
 				while ((r->links)[++c] && (!s || s->dist != i + 1))
 				{
-					s = corres_links((r->links)[c], l);
+					s = (r->links)[c];
 					if (s->dist == -1 && s->dist2 < r->dist2 && (done = 1))
 						s->dist = i + 1;
 				}

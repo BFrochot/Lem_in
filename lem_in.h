@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/02 15:06:38 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/02 18:52:38 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/03 02:01:03 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct		s_room
 	int				dist;
 	int				dist2;
 	int				sl;
-	int				*links;
+	struct s_room	**links;
 }					t_room;
 
 typedef struct		s_lem
@@ -51,7 +51,6 @@ typedef struct		s_lem
 	char			error;
 	char			*rendu;
 	int				len;
-	int				nam;
 }					t_lem;
 
 void				init_lem(t_lem *lem);
@@ -66,7 +65,7 @@ t_room 				*corres_links(int i, t_lem *l);
 void				putmove(char *ito, char *str, char C);
 void				set_dist(t_room *r, int i, t_lem *l);
 void				set_dist2(t_room *r, int i, t_lem *l);
-void				short_links(t_room *r, t_lem *l);
+void				short_links(t_room *r);
 void				sort_by_short_links(t_lem *l, char done, t_room *prev);
 void				quicksort(t_room *debut, t_room *fin, t_lem *l);
 void				resol(t_lem *l);

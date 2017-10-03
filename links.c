@@ -3,41 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   links.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bfrochot <bfrochot@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:48:14 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/02 19:00:40 by bfrochot         ###   ########.fr       */
+/*   Updated: 2017/10/03 04:02:29 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_intlen(int *k)
+void	insert_link(t_room *r, t_room *s)
 {
-	int i;
+	int		i;
+	t_room	**new;
 
 	i = 0;
-	while (k[i])
+	while (r->links && (r->links)[i])
+	{
+		if ((r->links)[i] == s)
+			return ;
 		++i;
-	return (i);
-}
-
-void	insert_link(t_room *r, int s)
-{
-	int		*new;
-	int		i;
-	char	d;
-
-	d = 0;
-	new = palloc(sizeof(int) * (ft_intlen(r->links) + 2));
-	i = -1;
-	while ((r->links)[++i])
+	}
+	new = palloc(sizeof(t_room *) * (i + 2));
+	i = 0;
+	while (r->links && (r->links)[i])
 	{
 		new[i] = (r->links)[i];
-		if (s == (r->links)[i])
-			d = 1;
+		++i;
 	}
-	new[i] = d ? 0 : s;
+	new[i] = s;
 	new[i + 1] = 0;
 	free(r->links);
 	r->links = new;
@@ -65,8 +59,8 @@ void	create_link(char *str1, char *str2, t_lem *lem)
 		return ;
 	if (!lem->error)
 	{
-		insert_link(s, r->nam);
-		insert_link(r, s->nam);
+		insert_link(s, r);
+		insert_link(r, s);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 21:26:26 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/03 03:59:42 by cosi             ###   ########.fr       */
+/*   Updated: 2017/11/10 16:28:44 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	options(int ac, char **arg, t_lem *lem)
 
 	while (--ac)
 	{
-		if (arg[ac][0] != '-')
+		if (arg[ac][0] != '-' || !arg[ac][1])
 			error(20, lem);
 		i = 0;
 		while (arg[ac][++i])

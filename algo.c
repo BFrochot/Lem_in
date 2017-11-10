@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:21:42 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/03 19:36:24 by cosi             ###   ########.fr       */
+/*   Updated: 2017/11/09 19:35:23 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	solve(t_lem *l)
 		r = l->rooms;
 		while (r)
 		{
+			// ft_putstr(r->name);
 			if (r->dist == i && r->ant)
 				advance(r, l, &first);
 			r = r->next;
@@ -153,6 +154,32 @@ void	sort_start(t_lem *l)
 	}
 }
 
+void	aff_all(t_room *r)
+{
+	int i;
+
+	while (r)
+	{
+		ft_putstr(r->name);
+		ft_putstr(" dist = ");
+		ft_putnbr(r->dist);
+		ft_putstr(" dist2 = ");
+		ft_putnbr(r->dist2);
+		ft_putstr(" sl = ");
+		ft_putnbr(r->sl);
+		ft_putchar('\n');
+		i = 0;
+		while (r->links[i])
+		{
+			ft_putstr(r->links[i]->name);
+			ft_putchar(' ');
+			++i;
+		}
+		ft_putchar('\n');
+		r = r->next;
+	}
+}
+
 void	resol(t_lem *l)
 {
 	if (!l->start)
@@ -165,6 +192,7 @@ void	resol(t_lem *l)
 	l->start->dist2 = 0;
 	set_dist2(l->start, 0, l);
 	set_dist(l->end, 0, l);
+	// aff_all(l->rooms);
 	if (l->start->dist == -1)
 		error(12, l);
 	if (l->E)
@@ -176,7 +204,9 @@ void	resol(t_lem *l)
 	if (l->start->dist == 1 || l->start->dist == 0)
 		finish(l, l->nb);
 	short_links(l->rooms);
+	// aff_all(l->rooms);
 	sort_by_short_links(l, 1, NULL);
+	// aff_all(l->rooms);
 	sort_start(l);
 	// quicksort(l->rooms, l->time, l);
 	start_move(l, 0);

@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:16:10 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/03 01:47:17 by cosi             ###   ########.fr       */
+/*   Updated: 2017/11/09 16:24:24 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	set_dist2(t_room *r, int i, t_lem *l)
 	t_room	*s;
 
 	c = -1;
-	while ((r->links)[++c])
+	while (r->links && (r->links)[++c])
 		((r->links)[c])->dist2 = 1;
 	done = c == 0 ? 0 : 1;
 	while (done && ++i)
@@ -67,7 +67,7 @@ void	set_dist2(t_room *r, int i, t_lem *l)
 		while (r)
 		{
 			if (r != l->end && r->dist2 == i && (c = -1))
-				while ((r->links)[++c])
+				while (r->links && (r->links)[++c])
 				{
 					s = (r->links)[c];
 					if (s->dist2 == -1 && (done = 1))
@@ -85,7 +85,7 @@ void	set_dist(t_room *r, int i, t_lem *l)
 	t_room	*s;
 
 	c = -1;
-	while ((r->links)[++c])
+	while (r->links && (r->links)[++c])
 		((r->links)[c])->dist = 1;
 	done = c == 0 ? 0 : 1;
 	while (done && ++i && (l->max = i))
@@ -94,14 +94,15 @@ void	set_dist(t_room *r, int i, t_lem *l)
 		r = l->rooms;
 		while (r)
 		{
-			s = NULL;
 			if (r != l->start && r->dist == i && (c = -1))
-				while ((r->links)[++c] && (!s || s->dist != i + 1))
+			{
+				while (r->links && (r->links)[++c])
 				{
 					s = (r->links)[c];
 					if (s->dist == -1 && s->dist2 < r->dist2 && (done = 1))
 						s->dist = i + 1;
 				}
+			}
 			r = r->next;
 		}
 	}

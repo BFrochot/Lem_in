@@ -6,7 +6,7 @@
 /*   By: cosi <cosi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 18:51:56 by bfrochot          #+#    #+#             */
-/*   Updated: 2017/10/03 19:26:09 by cosi             ###   ########.fr       */
+/*   Updated: 2017/11/09 16:33:00 by cosi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	short_links(t_room *r)
 			while ((r->links)[++i])
 			{
 				s = (r->links)[i];
-				if (s->dist != -1 && s->dist < r->dist)
+				// if (s->dist != -1 && s->dist < r->dist)
+				if (s->dist != -1 && s->dist2 > r->dist2)
 					++(r->sl);
 			}
 		r = r->next;
